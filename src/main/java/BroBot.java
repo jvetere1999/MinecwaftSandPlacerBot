@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 
 import static java.lang.Thread.sleep;
 
@@ -12,6 +13,7 @@ public class BroBot {
     Pair resolution;
     int DEFAULT_WAIT = 10;
     boolean space = false;
+    HashMap<Integer, Boolean> isPressed = new HashMap<Integer, Boolean>();
     void init() throws AWTException {
         screen = new Screen();
         robot = new Robot(screen.GetDevice());
@@ -109,10 +111,83 @@ public class BroBot {
         System.out.println(x + " " + y);
     }
 
-    public void space(int lengthOfPress) {
+    public void space() {
+        if (!isPressed.containsKey(KeyEvent.VK_SPACE)) {
+            isPressed.put(KeyEvent.VK_SPACE, false);
+        }
         if (space)
             robot.keyRelease(KeyEvent.VK_SPACE);
         else
             robot.keyPress(KeyEvent.VK_SPACE);
+        isPressed.put(KeyEvent.VK_SPACE, !isPressed.get(KeyEvent.VK_SPACE));
     }
+    public void FLY() {
+        space();
+
+    }
+    public void FORWARD() {
+        if (!isPressed.containsKey(KeyEvent.VK_W)) {
+            isPressed.put(KeyEvent.VK_W, false);
+        }
+        if (space)
+            robot.keyRelease(KeyEvent.VK_W);
+        else
+            robot.keyPress(KeyEvent.VK_W);
+        isPressed.put(KeyEvent.VK_W, !isPressed.get(KeyEvent.VK_W));
+    }
+    public void BACK() {
+        if (!isPressed.containsKey(KeyEvent.VK_S)) {
+            isPressed.put(KeyEvent.VK_S, false);
+        }
+        if (space)
+            robot.keyRelease(KeyEvent.VK_S);
+        else
+            robot.keyPress(KeyEvent.VK_S);
+        isPressed.put(KeyEvent.VK_S, !isPressed.get(KeyEvent.VK_S));
+    }
+    public void LEFT() {
+        if (!isPressed.containsKey(KeyEvent.VK_A)) {
+            isPressed.put(KeyEvent.VK_A, false);
+        }
+        if (space)
+            robot.keyRelease(KeyEvent.VK_A);
+        else
+            robot.keyPress(KeyEvent.VK_A);
+        isPressed.put(KeyEvent.VK_A, !isPressed.get(KeyEvent.VK_A));
+    }
+    public void RIGHT() {
+        if (!isPressed.containsKey(KeyEvent.VK_D)) {
+            isPressed.put(KeyEvent.VK_D, false);
+        }
+        if (space)
+            robot.keyRelease(KeyEvent.VK_D);
+        else
+            robot.keyPress(KeyEvent.VK_D);
+        isPressed.put(KeyEvent.VK_D, !isPressed.get(KeyEvent.VK_D));
+    }
+    public void TIMED_FORWARD(int time) throws InterruptedException {
+        FORWARD();
+        sleep(time);
+        FORWARD();
+    }
+    public void TIMED_BACKWARD(int time) throws InterruptedException {
+        BACK();
+        sleep(time);
+        BACK();
+    }
+    public void TIMED_LEFT(int time) throws InterruptedException {
+        LEFT();
+        sleep(time);
+        LEFT();
+    }
+    public void TIMED_RIGHT(int time) throws InterruptedException {
+        RIGHT();
+        sleep(time);
+        RIGHT();
+    }
+
+    public void TURN_90() {
+        increment(10, X_BOUNDS.x/2+X_BOUNDS.x, y);
+    }
+
 }
