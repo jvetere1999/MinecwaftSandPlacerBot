@@ -3,6 +3,7 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 import static java.lang.Thread.sleep;
+import static jdk.internal.org.objectweb.asm.Edge.JUMP;
 
 public class BroBot {
 
@@ -121,9 +122,9 @@ public class BroBot {
             robot.keyPress(KeyEvent.VK_SPACE);
         isPressed.put(KeyEvent.VK_SPACE, !isPressed.get(KeyEvent.VK_SPACE));
     }
-    public void FLY() {
+    public void JUMP() {
         space();
-
+        space();
     }
     public void FORWARD() {
         if (!isPressed.containsKey(KeyEvent.VK_W)) {
@@ -167,7 +168,19 @@ public class BroBot {
     }
     public void TIMED_FORWARD(int time) throws InterruptedException {
         FORWARD();
-        sleep(time);
+        int count = 0;
+        int previousSum = 0;
+        for (int i = 0; i < time; i++) {
+            Color current = robot.getPixelColor(x, y);
+            int sum = current.getAlpha() + current.getRed() + current.getGreen() + current.getBlue();
+            if (previousSum > sum)
+                count++;
+            previousSum = sum;
+            if (count == 5) {
+                JUMP();
+                count = 0;
+            }
+        }
         FORWARD();
     }
     public void TIMED_BACKWARD(int time) throws InterruptedException {
@@ -187,7 +200,7 @@ public class BroBot {
     }
 
     public void TURN_90() {
-        increment(10, X_BOUNDS.x/2+X_BOUNDS.x, y);
+        increment(5, x+90, y);
     }
 
 }
