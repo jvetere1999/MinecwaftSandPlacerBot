@@ -8,8 +8,8 @@ public class Runner {
     public static void main(String[] args) throws InterruptedException {
         BroBot sandBoy = null;
 
-        sleep(2599);
-        brobot2();
+        //sleep(2599);
+        image();
     }
     public static void brobot1() {
         BroBot sandBoy = null;
@@ -31,6 +31,16 @@ public class Runner {
         } catch (AWTException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void image() {
+        BroBot sandBoy = null;
+        try {
+            sandBoy = new BroBot(5);
+            sandBoy.takeImage();
+
+        } catch (AWTException e) {
             throw new RuntimeException(e);
         }
     }
