@@ -27,9 +27,7 @@ public class Runner {
             sandBoy.TIMED_FORWARD(1000);
             sandBoy.TURN_90();
             sandBoy.TIMED_FORWARD(1000);
-        } catch (AWTException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (AWTException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
